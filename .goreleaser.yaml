@@ -42,8 +42,8 @@ changelog:
   sort: asc
   filters:
     exclude:
-      - "^docs:"
-      - "^test:"
+      - '^docs:'
+      - '^test:'
 
 release:
   footer: >-
@@ -51,3 +51,10 @@ release:
     ---
 
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+
+brews:
+  - name: anmho
+    homepage: https://github.com/anmho/go-template-cli
+    # tap:
+    #   owner: scraly
+    #   name: homebrew-tools
