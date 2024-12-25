@@ -55,6 +55,6 @@ release:
 brews:
   - name: anmho
     homepage: https://github.com/anmho/go-template-cli
-    # tap:
-    #   owner: scraly
-    #   name: homebrew-tools
+    repository:
+      owner: anmho
+      name: brew-repo
