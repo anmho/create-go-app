@@ -57,4 +57,4 @@ brews:
     homepage: https://github.com/anmho/go-template-cli
     repository:
       owner: anmho
-      name: brew-repo
+      name: brew-taps
