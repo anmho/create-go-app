@@ -53,7 +53,7 @@ release:
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
 
 brews:
-  - name: anmho
+  - name: go-template-cli
     homepage: https://github.com/anmho/go-template-cli
     repository:
       owner: anmho
