@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package protos.greet.v1;
+
+option go_package = "github.com/anmho/cloud-run-connectrpc/gen/protos/greet/v1;greetv1";
+
+message GreetRequest {
+  string name = 1;
+}
+message GreetResponse {
+  string greeting = 1;
+}
