@@ -53,8 +53,8 @@ release:
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
 
 brews:
-  - name: go-template-cli
-    homepage: https://github.com/anmho/go-template-cli
+  - name: create-go-app
+    homepage: https://github.com/anmho/create-go-app
     repository:
       owner: anmho
       name: homebrew-taps
