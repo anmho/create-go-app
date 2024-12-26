@@ -9,7 +9,7 @@ import (
 	"text/template"
 )
 
-//go:embed templates/*
+//go:embed _templates/*
 var templateFs embed.FS
 
 func replaceDirWithValues(dir string, opts options) {
@@ -65,7 +65,7 @@ func replaceDirWithValues(dir string, opts options) {
 }
 
 func generateTemplatedAPI(opts options) {
-	dir := "templates/connectrpc-cloudrun"
+	dir := "_templates/connectrpc-cloudrun"
 	replaceDirWithValues(dir, opts)
 }
 
@@ -76,7 +76,7 @@ func generateTemplatedMain(opts options) {
 	// 	panic(err)
 	// }
 
-	templateDir := "templates"
+	templateDir := "_templates"
 	outDir := "out"
 
 	fs.WalkDir(templateFs, templateDir, func(path string, d fs.DirEntry, err error) error {

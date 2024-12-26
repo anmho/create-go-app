@@ -4,9 +4,7 @@ package main
 // program after the Bubble Tea has exited.
 
 import (
-	"embed"
 	"fmt"
-	"io/fs"
 	"log"
 
 	"github.com/charmbracelet/huh"
@@ -34,16 +32,7 @@ const (
 	ConnectCloudRun AppTemplate = "connect-cloudrun"
 )
 
-//go:embed all:templates/*
-var templateFs2 embed.FS
-
 func main() {
-	dirs, err := fs.ReadDir(templateFs2, "templates/connectrpc-cloudrun")
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(dirs)
 	
 	opts := NewOptions()
 	form := huh.NewForm(
