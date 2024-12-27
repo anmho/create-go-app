@@ -70,34 +70,3 @@ func generateTemplatedAPI(opts options) error {
 
 	return replaceDirWithValues(dir, opts)
 }
-
-
-// func generateTemplatedMain(opts options) {
-// 	templateDir := "_templates"
-// 	outDir := "out"
-
-// 	fs.WalkDir(templateFs, templateDir, func(path string, d fs.DirEntry, err error) error {
-// 		// fmt.Println(path)
-// 		parts := strings.Split(path, "/")
-// 		parts[0] = outDir
-// 		outPath := filepath.Join(parts...)
-// 		if d.IsDir() {
-// 			os.Mkdir(outPath, 0777)
-// 		} else {
-// 			tmpl, err := template.ParseFS(templateFs, path)
-// 			if err != nil {
-// 				panic(err)
-// 			}
-// 			file, err := os.Create(outPath)
-// 			if err != nil {
-// 				panic(err)
-// 			}
-// 			err = tmpl.Execute(file, struct{ Name string }{Name: "andy"})
-// 			if err != nil {
-// 				panic(err)
-// 			}
-// 		}
-
-// 		return nil
-// 	})
-// }
