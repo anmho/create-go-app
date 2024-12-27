@@ -15,7 +15,7 @@ import (
 var templateFs embed.FS
 
 func replaceDirWithValues(dir string, opts options) error {
-	outDir := opts.appName
+	outDir := opts.AppName
 	fs.WalkDir(templateFs, dir, func(path string, d fs.DirEntry, err error) error {
 		// fmt.Println(dir, path)
 		if err != nil {
@@ -44,7 +44,7 @@ func replaceDirWithValues(dir string, opts options) error {
 			if err != nil {
 				return err
 			}
-			err = tmpl.Execute(file, struct{ Name string }{Name: "andy"})
+			err = tmpl.Execute(file, opts)
 			if err != nil {
 				return err
 			}
@@ -59,13 +59,13 @@ func replaceDirWithValues(dir string, opts options) error {
 func generateTemplatedAPI(opts options) error {
 
 	var dir string
-	switch opts.appTemplate {
+	switch opts.AppTemplate {
 	case string(ConnectCloudRun):
 		dir = "_templates/connectrpc-cloudrun"
 	case string(HumaFlyIO):
 		dir = "_templates/huma-fly"
 	default:
-		return errors.New(fmt.Sprintf("unknown template type", opts.appTemplate))
+		return errors.New(fmt.Sprintf("unknown template type", opts.AppTemplate))
 	} 
 
 	return replaceDirWithValues(dir, opts)

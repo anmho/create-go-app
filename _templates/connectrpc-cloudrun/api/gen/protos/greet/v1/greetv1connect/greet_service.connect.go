@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/anmho/cloud-run-connectrpc/gen/protos/greet/v1"
+	v1 "{{ .ModuleName }}/gen/protos/greet/v1"
 	http "net/http"
 	strings "strings"
 )

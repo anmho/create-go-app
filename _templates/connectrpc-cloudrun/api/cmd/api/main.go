@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"connectrpc.com/grpcreflect"
-	"github.com/anmho/cloud-run-connectrpc/gen/protos/greet/v1/greetv1connect"
-	"github.com/anmho/cloud-run-connectrpc/pkg/server"
+	"{{ .ModuleName }}/gen/protos/greet/v1/greetv1connect"
+	"{{ .ModuleName }}/pkg/server"
 	_ "github.com/jackc/pgx/v5/stdlib" // Import the pgx driver for database/sql
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"

@@ -11,13 +11,14 @@ import (
 )
 
 type options struct {
-	appName string
-	appTemplate string
+	AppName string
+	ModuleName string
+	AppTemplate string
 }
 
 func NewOptions() options {
 	return options{
-		appName: "my-go-app",
+		AppName: "my-go-app",
 	}
 }
 
@@ -40,16 +41,16 @@ func main() {
 			huh.NewInput().
 				Title("What is the name of your app?").
 				Placeholder("my-go-app").
-				Value(&opts.appName),
+				Value(&opts.AppName),
 		),
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Title("Choose your API Framework (API framework + PaaS)").
 				Options(
-					huh.NewOption("HumaRocks + fly.io", string(HumaFlyIO)),
 					huh.NewOption("ConnectRPC + Google Cloud Run", string(ConnectCloudRun)),
+					huh.NewOption("HumaRocks + fly.io", string(HumaFlyIO)),
 				).
-				Value(&opts.appTemplate), // store the chosen option in the "burger" variable
+				Value(&opts.AppTemplate),
 		),
 		huh.NewGroup(
 			huh.NewConfirm().
@@ -57,7 +58,7 @@ func main() {
 				Description(fmt.Sprintf(
 `
 	Name: %s
-	Template: %s`, opts.appName, opts.appTemplate)).
+	Template: %s`, opts.AppName, opts.AppTemplate)).
 				Value(&confirmConfig),
 		),
 	)
@@ -66,6 +67,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// generateTemplatedMain(opts)
-	generateTemplatedAPI(opts)
+	opts.ModuleName=opts.AppName
+
+	err := generateTemplatedAPI(opts)
+	if err != nil {
+		panic(err)
+	}
 }

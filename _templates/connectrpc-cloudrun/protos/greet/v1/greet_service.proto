@@ -3,7 +3,7 @@ import "protos/greet/v1/greet_messages.proto";
 
 package protos.greet.v1;
 
-option go_package = "github.com/anmho/cloud-run-connectrpc/gen/protos/greet/v1;greetv1";
+option go_package = "{{ .ModuleName }}/gen/protos/greet/v1;greetv1";
 
 service GreetService {
   rpc Greet(GreetRequest)

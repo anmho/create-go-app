@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
-	greetv1 "github.com/anmho/cloud-run-connectrpc/gen/protos/greet/v1"
+	greetv1 "{{ .ModuleName }}/gen/protos/greet/v1"
 	"github.com/stretchr/testify/assert"
 )
 
