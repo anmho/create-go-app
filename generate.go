@@ -2,6 +2,8 @@ package main
 
 import (
 	"embed"
+	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -12,23 +14,12 @@ import (
 //go:embed _templates/*
 var templateFs embed.FS
 
-func replaceDirWithValues(dir string, opts options) {
+func replaceDirWithValues(dir string, opts options) error {
 	outDir := opts.appName
-	// err := os.Mkdir(outDir, 0777)
-	// if err != nil {
-	// 	log.Fatalln("directory already exists here")
-	// }
-	
-	// dirs, err := fs.ReadDir(templateFs, dir)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println(dirs)
-
 	fs.WalkDir(templateFs, dir, func(path string, d fs.DirEntry, err error) error {
 		// fmt.Println(dir, path)
 		if err != nil {
-			panic(err)
+			return err
 		}
 		
 		parts := []string{}
@@ -39,68 +30,74 @@ func replaceDirWithValues(dir string, opts options) {
 		if d.IsDir() {
 			err := os.Mkdir(outPath, 0777)
 			if err != nil {
-				panic(err)
+				return err
 			}
 		} else {
 			tmpl, err := template.ParseFS(templateFs, path)
 			if err != nil {
-				panic(err)
+				return err
 			}
 			if strings.HasSuffix(outPath, ".tmpl") {
 				outPath = strings.Replace(outPath, ".tmpl", "", -1)
 			}
 			file, err := os.Create(outPath)
 			if err != nil {
-				panic(err)
+				return err
 			}
 			err = tmpl.Execute(file, struct{ Name string }{Name: "andy"})
 			if err != nil {
-				panic(err)
+				return err
 			}
 		}
 
 		return nil
 	})
+	return nil
 
 }
 
-func generateTemplatedAPI(opts options) {
-	dir := "_templates/connectrpc-cloudrun"
-	replaceDirWithValues(dir, opts)
+func generateTemplatedAPI(opts options) error {
+
+	var dir string
+	switch opts.appTemplate {
+	case string(ConnectCloudRun):
+		dir = "_templates/connectrpc-cloudrun"
+	case string(HumaFlyIO):
+		dir = "_templates/huma-fly"
+	default:
+		return errors.New(fmt.Sprintf("unknown template type", opts.appTemplate))
+	} 
+
+	return replaceDirWithValues(dir, opts)
 }
 
 
-func generateTemplatedMain(opts options) {
-	// pwd, err := os.Getwd()
-	// if err != nil {
-	// 	panic(err)
-	// }
+// func generateTemplatedMain(opts options) {
+// 	templateDir := "_templates"
+// 	outDir := "out"
 
-	templateDir := "_templates"
-	outDir := "out"
+// 	fs.WalkDir(templateFs, templateDir, func(path string, d fs.DirEntry, err error) error {
+// 		// fmt.Println(path)
+// 		parts := strings.Split(path, "/")
+// 		parts[0] = outDir
+// 		outPath := filepath.Join(parts...)
+// 		if d.IsDir() {
+// 			os.Mkdir(outPath, 0777)
+// 		} else {
+// 			tmpl, err := template.ParseFS(templateFs, path)
+// 			if err != nil {
+// 				panic(err)
+// 			}
+// 			file, err := os.Create(outPath)
+// 			if err != nil {
+// 				panic(err)
+// 			}
+// 			err = tmpl.Execute(file, struct{ Name string }{Name: "andy"})
+// 			if err != nil {
+// 				panic(err)
+// 			}
+// 		}
 
-	fs.WalkDir(templateFs, templateDir, func(path string, d fs.DirEntry, err error) error {
-		// fmt.Println(path)
-		parts := strings.Split(path, "/")
-		parts[0] = outDir
-		outPath := filepath.Join(parts...)
-		if d.IsDir() {
-			os.Mkdir(outPath, 0777)
-		} else {
-			tmpl, err := template.ParseFS(templateFs, path)
-			if err != nil {
-				panic(err)
-			}
-			file, err := os.Create(outPath)
-			if err != nil {
-				panic(err)
-			}
-			err = tmpl.Execute(file, struct{ Name string }{Name: "andy"})
-			if err != nil {
-				panic(err)
-			}
-		}
-
-		return nil
-	})
-}
+// 		return nil
+// 	})
+// }
